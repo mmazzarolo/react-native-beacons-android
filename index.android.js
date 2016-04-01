@@ -1,2 +1,2 @@
 import { NativeModules } from 'react-native'
-module.exports = NativeModules.BeaconsAndroid
+module.exports = NativeModules.BeaconsAndroidModule
