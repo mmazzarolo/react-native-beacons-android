@@ -10,17 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeaconsAndroidPackage implements ReactPackage {
-    private android.content.Context applicationContext = null;
-
-    public BeaconsAndroidPackage(android.content.Context applicationContext) {
-        this.applicationContext = applicationContext;
-    }
 
     @Override
     public List<NativeModule> createNativeModules(
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new BeaconsAndroidModule(reactContext, this.applicationContext));
+        modules.add(new BeaconsAndroidModule(reactContext));
         return modules;
     }
 

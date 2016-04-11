@@ -1,7 +1,5 @@
 package com.mmazzarolo.beaconsandroid;
 
-import android.bluetooth.le.AdvertiseCallback;
-import android.bluetooth.le.AdvertiseSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -15,8 +13,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
@@ -34,30 +30,37 @@ import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
-    @Override
-    public String getName() {
-        return "BeaconsAndroidModule";
-    }
 
-    private static final String LOG_TAG = "BeaconsAndroid";
-    private static final String BEACON_SPEC = "m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24";
+    private static final String LOG_TAG = "BeaconsAndroidModule";
+    private static final String IBEACON_SPEC = "m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24";
     private static final String SUPPORTED = "SUPPORTED";
     private static final String NOT_SUPPORTED_MIN_SDK = "NOT_SUPPORTED_MIN_SDK";
     private static final String NOT_SUPPORTED_BLE = "NOT_SUPPORTED_BLE";
     private static final String NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS = "NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS";
     private static final String NOT_SUPPORTED_CANNOT_GET_ADVERTISER = "NOT_SUPPORTED_CANNOT_GET_ADVERTISER";
-    private static ReactApplicationContext context;
+    private static ReactApplicationContext reactContext;
     private static android.content.Context applicationContext;
-
     BeaconManager beaconManager;
+
+    public BeaconsAndroidModule(ReactApplicationContext reactContext) {
+        super(reactContext);
+        Log.v(LOG_TAG, "BeaconsAndroidModule - started");
+        this.reactContext = reactContext;
+        this.applicationContext = reactContext.getApplicationContext();
+        beaconManager = BeaconManager.getInstanceForApplication(applicationContext);
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(IBEACON_SPEC));
+    }
+
+    @Override
+    public String getName() {
+        return LOG_TAG;
+    }
 
     @Override
     public Map<String, Object> getConstants() {
@@ -70,56 +73,12 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
         return constants;
     }
 
-    public BeaconsAndroidModule(ReactApplicationContext reactContext, android.content.Context applicationContext) {
-        super(reactContext);
-        Log.v(LOG_TAG, "BeaconsAndroidModule - started");
-        context = reactContext;
-        this.applicationContext = applicationContext;
-    }
 
     @ReactMethod
-    public void checkTransmissionSupported(Callback cb) {
-        int result = BeaconTransmitter.checkTransmissionSupported(context);
+    public void checkTransmissionSupport(Callback cb) {
+        int result = BeaconTransmitter.checkTransmissionSupported(reactContext);
+        Log.v(LOG_TAG, "checkTransmissionSupport - result: " + result);
         cb.invoke(result);
-    }
-
-    @ReactMethod
-    public void startTransmitting(String uuid, ReadableMap params, final Callback onSuccess, final Callback onError) {
-        String minor = params.isNull("minor") ? "1" : params.getString("minor");
-        String major = params.isNull("major") ? "2" : params.getString("major");
-        int manufacturer = params.isNull("manufacturer") ? 0x0118 : params.getInt("manufacturer");
-
-        List<Long> data = Arrays.asList(new Long[]{0l});
-        if (params.isNull("data") == false) {
-            ReadableArray dataParams = params.getArray("data");
-            for (int i = dataParams.size(); i > 0; i -= 1) {
-                data.add((long) dataParams.getInt(i - 1));
-            }
-        }
-
-        Beacon beacon = new Beacon.Builder()
-                .setId1(uuid)
-                .setId2(minor)
-                .setId3(major)
-                .setManufacturer(manufacturer)
-                .setTxPower(-59)
-                .setDataFields(data)
-                .build();
-        BeaconParser beaconParser = new BeaconParser()
-                .setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
-        BeaconTransmitter beaconTransmitter = new BeaconTransmitter(context, beaconParser);
-        beaconTransmitter.startAdvertising(beacon, new AdvertiseCallback() {
-
-            @Override
-            public void onStartFailure(int errorCode) {
-                onError.invoke(errorCode);
-            }
-
-            @Override
-            public void onStartSuccess(AdvertiseSettings settingsInEffect) {
-                onSuccess.invoke();
-            }
-        });
     }
 
     private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
@@ -131,31 +90,24 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
     /**
      * MONITORING METHODS
      */
-    protected String uuid = null;
-    protected String beaconUuid = null;
+    protected String monitoringRegionId = null;
+    protected String monitoringBeaconUuid = null;
 
     @ReactMethod
-    public void startMonitoring(String uuid, @Nullable String beaconUuid) {
-        this.uuid = uuid;
-        this.beaconUuid = beaconUuid;
-        beaconManager = BeaconManager.getInstanceForApplication(applicationContext);
+    public void startMonitoring(String monitoringRegionId, String monitoringBeaconUuid) {
+        Log.v(LOG_TAG, "startMonitoring - monitoringRegionId: " + monitoringRegionId);
+        Log.v(LOG_TAG, "startMonitoring - rangingBeaconUuid: " + rangingBeaconUuid);
+        this.monitoringRegionId = monitoringRegionId;
+        this.monitoringBeaconUuid = monitoringBeaconUuid;
         beaconManager.bind(monitoringConsumer);
-        sendEvent(context, "startMonitoring", null);
+        sendEvent(reactContext, "startMonitoring", null);
     }
 
     private BeaconConsumer monitoringConsumer = new BeaconConsumer() {
         @Override
         public void onBeaconServiceConnect() {
-            Log.v(LOG_TAG, "monitoringConsumer: onBeaconServiceConnect");
-            beaconManager.getBeaconParsers().clear();
-            beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_SPEC));
-
-            try {
-                Identifier beaconId = (rangingBeaconUuid == null) ? null : Identifier.parse(beaconUuid);
-                beaconManager.startMonitoringBeaconsInRegion(new Region(uuid, beaconId, null, null));
-            } catch (RemoteException e) {
-            }
-            sendEvent(context, "beaconServiceConnect", null);
+            Log.v(LOG_TAG, "monitoringConsumer - onBeaconServiceConnect");
+            sendEvent(reactContext, "beaconServiceConnect", null);
             beaconManager.setMonitorNotifier(new BootstrapNotifier() {
                 @Override
                 public Context getApplicationContext() {
@@ -164,25 +116,32 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
 
                 @Override
                 public void didEnterRegion(Region region) {
-                    Log.v(LOG_TAG, "monitoringConsumer: didEnterRegion");
+                    Log.v(LOG_TAG, "monitoringConsumer - didEnterRegion");
                     WritableMap map = Arguments.createMap();
-                    sendEvent(context, "didEnterRegion", map);
+                    sendEvent(reactContext, "didEnterRegion", map);
                 }
 
                 @Override
                 public void didExitRegion(Region region) {
-                    Log.v(LOG_TAG, "monitoringConsumer: didExitRegion");
+                    Log.v(LOG_TAG, "monitoringConsumer - didExitRegion");
                     WritableMap map = Arguments.createMap();
-                    sendEvent(context, "didExitRegion", map);
+                    sendEvent(reactContext, "didExitRegion", map);
                 }
 
                 @Override
                 public void didDetermineStateForRegion(int i, Region region) {
-                    Log.v(LOG_TAG, "monitoringConsumer: didDetermineStateForRegion");
+                    Log.v(LOG_TAG, "monitoringConsumer - didDetermineStateForRegion");
                     WritableMap map = Arguments.createMap();
-                    sendEvent(context, "didDetermineStateForRegion", map);
+                    sendEvent(reactContext, "didDetermineStateForRegion", map);
                 }
             });
+
+            try {
+                Identifier beaconId = (rangingBeaconUuid == null) ? null : Identifier.parse(monitoringBeaconUuid);
+                beaconManager.startMonitoringBeaconsInRegion(new Region(monitoringRegionId, beaconId, null, null));
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "startMonitoringBeaconsInRegion error: ", e);
+            }
         }
 
         @Override
@@ -206,65 +165,71 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
     /**
      * RANGING METHODS
      */
-    protected String rangingUuid = null;
+    protected String rangingRegionId = null;
     protected String rangingBeaconUuid = null;
 
     @ReactMethod
-    public void startRanging(String rangingUuid, @Nullable String rangingBeaconUuid) {
-        this.rangingUuid = rangingUuid;
+    public void startRanging(String rangingRegionId, String rangingBeaconUuid) {
+        Log.v(LOG_TAG, "startRanging - rangingRegionId: " + rangingRegionId);
+        Log.v(LOG_TAG, "startRanging - rangingBeaconUuid: " + rangingBeaconUuid);
+        this.rangingRegionId = rangingRegionId;
         this.rangingBeaconUuid = rangingBeaconUuid;
-        beaconManager = BeaconManager.getInstanceForApplication(applicationContext);
         beaconManager.bind(rangingConsumer);
-        sendEvent(context, "startRanging", null);
+        sendEvent(reactContext, "startRanging", null);
+    }
+
+    private WritableMap createBeaconsArray(Collection<Beacon> beacons, Region region) {
+        WritableMap map = new WritableNativeMap();
+        map.putString("uuid", region.getUniqueId());
+        WritableArray a = new WritableNativeArray();
+        for (Beacon beacon : beacons) {
+            WritableMap b = new WritableNativeMap();
+            b.putString("id1", beacon.getId1().toHexString());
+            b.putString("id2", beacon.getId2().toHexString());
+            b.putString("id3", beacon.getId3().toHexString());
+            b.putInt("rssi", beacon.getRssi());
+            b.putDouble("distance", beacon.getDistance());
+            List<Long> dataFields = beacon.getDataFields();
+            if (dataFields.size() > 0) {
+                List<Long> dfs = new ArrayList<Long>();
+                for (Long dataField : dataFields) {
+                    dfs.add(dataField);
+                }
+            }
+            List<Long> extraDataFields = beacon.getDataFields();
+            if (extraDataFields.size() > 0) {
+                List<Long> edfs = new ArrayList<Long>();
+                for (Long extraDataField : extraDataFields) {
+                    edfs.add(extraDataField);
+                }
+            }
+            a.pushMap(b);
+        }
+        map.putArray("beacons", a);
+        return map;
     }
 
     private BeaconConsumer rangingConsumer = new BeaconConsumer() {
         @Override
         public void onBeaconServiceConnect() {
-            Log.v(LOG_TAG, "rangingConsumer: onBeaconServiceConnect");
-            beaconManager.getBeaconParsers().clear();
-            beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_SPEC));
+            Log.v(LOG_TAG, "rangingConsumer - onBeaconServiceConnect");
             beaconManager.setRangeNotifier(new RangeNotifier() {
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                    Log.v(LOG_TAG, "rangingConsumer: didRangeBeaconsInRegion");
-                    WritableMap map = new WritableNativeMap();
-                    map.putString("uuid", region.getUniqueId());
+                    Log.v(LOG_TAG, "rangingConsumer - didRangeBeaconsInRegion, beacons: " + beacons.toString());
+                    Log.v(LOG_TAG, "rangingConsumer - didRangeBeaconsInRegion, region: " + region.toString());
                     if (beacons.size() > 0) {
-                        WritableArray a = new WritableNativeArray();
-                        for (Beacon beacon : beacons) {
-                            WritableMap b = new WritableNativeMap();
-                            b.putString("id1", beacon.getId1().toHexString());
-                            b.putString("id2", beacon.getId2().toHexString());
-                            b.putString("id3", beacon.getId3().toHexString());
-                            b.putInt("rssi", beacon.getRssi());
-                            b.putDouble("distance", beacon.getDistance());
-                            List<Long> dataFields = beacon.getDataFields();
-                            if (dataFields.size() > 0) {
-                                List<Long> dfs = new ArrayList<Long>();
-                                for (Long dataField : dataFields) {
-                                    dfs.add(dataField);
-                                }
-                            }
-                            List<Long> extraDataFields = beacon.getDataFields();
-                            if (extraDataFields.size() > 0) {
-                                List<Long> edfs = new ArrayList<Long>();
-                                for (Long extraDataField : extraDataFields) {
-                                    edfs.add(extraDataField);
-                                }
-                            }
-                            a.pushMap(b);
-                        }
-                        map.putArray("beacons", a);
-                        sendEvent(context, "didFoundBeacons", map);
+                        WritableMap map = createBeaconsArray(beacons, region);
+                        sendEvent(reactContext, "didFoundBeacons", map);
                     }
                 }
             });
 
             try {
                 Identifier beaconId = (rangingBeaconUuid == null) ? null : Identifier.parse(rangingBeaconUuid);
-                beaconManager.startRangingBeaconsInRegion(new Region(rangingUuid, beaconId, null, null));
+                beaconManager.startRangingBeaconsInRegion(new Region(rangingRegionId, null, null, null));
             } catch (RemoteException e) {
+                Log.e(LOG_TAG, "startRangingBeaconsInRegion error: ", e);
             }
         }
 
@@ -275,13 +240,13 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
 
         @Override
         public void unbindService(ServiceConnection serviceConnection) {
-            Log.v(LOG_TAG, "rangingConsumer: unbindService");
+            Log.v(LOG_TAG, "rangingConsumer - unbindService");
             applicationContext.unbindService(serviceConnection);
         }
 
         @Override
         public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
-            Log.v(LOG_TAG, "rangingConsumer: bindService");
+            Log.v(LOG_TAG, "rangingConsumer - bindService");
             return applicationContext.bindService(intent, serviceConnection, i);
         }
     };
@@ -292,10 +257,12 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
         try {
             beaconManager.unbind(monitoringConsumer);
         } catch (Exception e) {
+            Log.e(LOG_TAG, "monitoringConsumer unbind error: ", e);
         }
         try {
             beaconManager.unbind(rangingConsumer);
         } catch (Exception e) {
+            Log.e(LOG_TAG, "rangingConsumer unbind error: ", e);
         }
     }
 }
