@@ -1,35 +1,9 @@
 # react-native-beacons-android
-A temporary implementation of [react-native-alt-beacon](https://github.com/octavioturra/react-native-alt-beacon) of Octavio Turra.  I'm just hosting the library for testing purpose (NPM + RNPM)
+A React-Native library I'm using in production for handling beacons on Android.  
+This library works only on Android, for iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon); I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing.  
 
---
-
-## RNAAltBeacon
-
-A work-in-progress lib to work with AltBeacon and React Native.
-
-## IOS
-
-No donuts for you. I can't make a functional ios version.
-
-For test purpose, you can install AltBeacon for ios into your project and add iOs folder content.
-It doesn't emit signal nor errors..
-
-## Android
-
-Can transmit and receive beacon data.
-
-### Methods:
-
-- checkTransmissionSupported(cb:Function)
-- startTransmitting(uuid:String, params:Object, onSuccess:Function, onError:Function)
-- startMonitoring(uuid:String)
-- startRanging(uuid:String)
-
-### Events
-
-- startMonitoring
-- startRanging
-- didEnterRegion
-- didExitRegion
-- didDetermineStateForRegion
-- didFoundBeacons
+### Setup  
+1. The library is available on npm, install it with: `npm install --save react-native-beacons-android`.  
+2. Link the library with your project:
+Install [rnpm](https://github.com/rnpm/rnpm) with the command `npm install -g rnpm` and then link the library with the command `rnpm link` 
+3. You're done!  
