@@ -13,7 +13,7 @@ const tramissionSupport = {
   5: 'NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS'
 }
 
-const addParser = () => beaconsAndroid.addParser
+const addParser = () => beaconsAndroid.addParser()
 
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
