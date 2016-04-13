@@ -1,8 +1,8 @@
 {
   "name": "react-native-beacons-android",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A React Native (Android) library helper for beacons",
-  "main": "index.android.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
