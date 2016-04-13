@@ -15,13 +15,76 @@ Install [rnpm](https://github.com/rnpm/rnpm) with the command `npm install -g rn
 3. You're done!  
 
 ## Usage  
-First of all import the library where needed:
-```
+**1. Import the library**
+```javascript
 import Beacons from 'react-native-beacons-android'
 ```
 
-You can then interact with almost every type of beacons using Beacons methods and events.
-  
+**2. Detect a custom beacon layout (optional)**   
+A beacon layout is a string (for example: `m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24`) that tells the library what kind of beacons you want to detect (iBeacons, altBeacons, etc...).  
+By default the library can detect only [AltBeacons](http://altbeacon.org/) but you can add any kind of beacon layout you want (you can find the layout of your beacons on Google).  
+You can detect a custom beacon layout with:  
+```javascript
+Beacons.detectCustomBeaconLayout('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24') // iBeacons layout
+```
+For sake of simplicity I also added an utility method that you can use for detecting iBeacons:
+```javascript
+Beacons.detectIBeacons()
+```
+**3. Start ranging/monitoring for beacons**  
+You can use this library both for region monitoring and region ranging:
+If you don't know the difference between the two but you can find some informations [here](https://community.estimote.com/hc/en-us/articles/203356607-What-are-region-Monitoring-and-Ranging-).  
+Ranging:  
+```javascript
+Beacons.startRangingForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  .then(() => console.log(`Beacons monitoring started succesfully`)
+  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+```
+Monitoring:  
+```javascript
+Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  .then(() => console.log(`Beacons monitoring started succesfully`)
+  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+```
+The parameter `REGION1` that I'm using is an identifier for the scanned region (use whatever you like).  
+The parameter `2ba8e073-b782-3957-0947-268e3850lopd` is optional, and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).  
+
+P.S.: You can stop ranging/monitoring by calling `Beacons.stopRangingForRegion()` and `Beacons.stopMonitoringForRegion()`
+
+**4. Do something when the beacons are detected!**  
+After the ranging/monitoring start you can get the information of the detected beacons using React-Native DeviceEventEmitter.  
+Ranging will emit a `beaconsDidRange` event, while monitoring will emit a `regionDidEnter`/`regionDidExit` event.  
+```javascript
+import { DeviceEventEmitter } from 'react-native'
+DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+  console.log('Found beacons!', data)
+})
+DeviceEventEmitter.addListener('regionDidEnter', (region) => {
+  console.log('Entered new beacons region!', region)
+})
+DeviceEventEmitter.addListener('regionDidExit', (region) => {
+  console.log('Exited beacons region!', region)
+})
+```
+
+**5. A complete example**  
+The following example will start ranging for near iBeacons.  
+```javascript
+import { DeviceEventEmitter } from 'react-native'
+import Beacons from 'react-native-beacons-android'
+
+Beacons.detectCustomBeaconLayout('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24') 
+// The step above is exactly like calling Beacons.detectIBeacons()
+
+Beacons.startRangingForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  .then(() => console.log(`Beacons monitoring started succesfully`)
+  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+
+DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+  console.log('Found beacons!', data)
+})
+```
+
 ## API docs
 ##### Beacons.addParser(parser: string):  
 Adds a parser for a specific beacons specification.     
@@ -63,9 +126,9 @@ Example usage (with `async/await`):
 ```javascript
 try {
   await Beacons.startMonitoring('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  console.log(`Beacons monitoring started succesfully`)
+  console.log(`Beacons ranging started succesfully`)
 } catch (error) {
-  console.log(`Beacons monitoring not started, error: ${error}`)
+  console.log(`Beacons ranging not started, error: ${error}`)
 }
 ``` 
 
