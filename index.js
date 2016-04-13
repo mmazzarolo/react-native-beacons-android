@@ -2,7 +2,7 @@ import { NativeModules } from 'react-native'
 
 const beaconsAndroid = NativeModules.BeaconsAndroidModule
 
-export const PARSER_IBEACON = 'm:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24'
+const PARSER_IBEACON= 'm:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24'
 
 const tramissionSupport = {
   0: 'SUPPORTED',
@@ -13,7 +13,9 @@ const tramissionSupport = {
   5: 'NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS'
 }
 
-const addParser = () => beaconsAndroid.addParser()
+const addParserForIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
+
+const addCustomParser = (parser) => beaconsAndroid.addCustomParser(parser)
 
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
@@ -32,7 +34,8 @@ const stopMonitoring = () => new Promise(beaconsAndroid.stopMonitoring)
 const stopRanging = () => new Promise(beaconsAndroid.stopRanging)
 
 export default {
-  addParser,
+  addParserForIBeacons,
+  addCustomParser,
   checkTransmissionSupported,
   startMonitoring,
   startRanging,
