@@ -169,8 +169,7 @@ try {
 ``` 
 <br />
 ##### Beacons.stopRangingBeaconsInRegion(): promise  
-Stops the range scan for beacons.  
-Example usage:
+Stops the range scan for beacons. 
 ```javascript
 // Example using then/catch
 Beacons.stopRangingBeaconsInRegion()
