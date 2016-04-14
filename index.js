@@ -25,20 +25,20 @@ const startMonitoringForRegion = (regionId, beaconsUUID) => new Promise((resolve
   beaconsAndroid.startMonitoring(regionId, beaconsUUID, resolve, reject)
 })
 
-const startRangingForRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
+const startRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
   beaconsAndroid.startRanging(regionId, beaconsUUID, resolve, reject)
 })
 
 const stopMonitoringForRegion = () => new Promise(beaconsAndroid.stopRanging)
 
-const stopRangingForRegion = () => new Promise(beaconsAndroid.stopMonitoring)
+const stopRangingBeaconsInRegion = () => new Promise(beaconsAndroid.stopMonitoring)
 
 export default {
   detectIBeacons,
   detectCustomBeaconLayout,
   checkTransmissionSupported,
   startMonitoringForRegion,
-  startRangingForRegion,
+  startRangingBeaconsInRegion,
   stopMonitoringForRegion,
-  stopRangingForRegion
+  stopRangingBeaconsInRegion
 }
