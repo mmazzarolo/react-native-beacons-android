@@ -24,7 +24,7 @@ import Beacons from 'react-native-beacons-android'
 Beacons.detectIBeacons()
 
 // Start detecting all iBeacons in the nearby
-Beacons.startRangingForRegion('REGION1')
+Beacons.startRangingBeaconsInRegion('REGION1')
   .then(() => console.log(`Beacons monitoring started succesfully!`)
   .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
 
@@ -54,14 +54,13 @@ Beacons.detectIBeacons()
 **3. Start ranging/monitoring for beacons**  
 You can use this library for both region monitoring and region ranging.  
 If you don't know the difference between monitoring and ranging you can find some informations [here](https://community.estimote.com/hc/en-us/articles/203356607-What-are-region-Monitoring-and-Ranging-).  
-Starts ranging:  
 ```javascript
-Beacons.startRangingForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+// Ranging
+Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   .then(() => console.log(`Beacons ranging started succesfully`)
   .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
-```
-Starts monitoring:  
-```javascript
+
+// Monitoring
 Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   .then(() => console.log(`Beacons monitoring started succesfully`)
   .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
@@ -69,41 +68,44 @@ Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lop
 The parameter `REGION1` that I'm using is an identifier for the scanned region (use whatever you like).  
 The parameter `2ba8e073-b782-3957-0947-268e3850lopd` is optional, and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).  
 
-P.S.: You can stop ranging/monitoring by calling `Beacons.stopRangingForRegion()` and `Beacons.stopMonitoringForRegion()`
+P.S.: You can stop ranging/monitoring by calling `Beacons.stopRangingBeaconsInRegion()` and `Beacons.stopMonitoringForRegion()`
 
 **4. Do something when the beacons are detected!**  
 After the ranging/monitoring starts you can get the information of the detected region and beacons using React-Native `DeviceEventEmitter`.  
 Ranging will emit a `beaconsDidRange` event, while monitoring will emit a `regionDidEnter`/`regionDidExit` event.  
 ```javascript
 import { DeviceEventEmitter } from 'react-native'
+
 DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-  console.log('Found beacons!', data)
+  console.log('Found beacons!', data) // Result of ranging
 })
 DeviceEventEmitter.addListener('regionDidEnter', (region) => {
-  console.log('Entered new beacons region!', region)
+  console.log('Entered new beacons region!', region) // Result of monitoring
 })
 DeviceEventEmitter.addListener('regionDidExit', (region) => {
-  console.log('Exited beacons region!', region)
+  console.log('Exited beacons region!', region) // Result of monitoring
 })
 ```
 
 ## API docs
-##### Beacons.addParser(parser: string):  
-Adds a parser for a specific beacons specification.     
-For example `Beacons.addParser('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24')` allows you to detect iBeacons beacons.  
-Add any beacon specification you need to detect.  
+##### Beacons.detectCustomBeaconLayout(parser: string): void  
+Allows the detection of a custom beacon layout.     
+For example `Beacons.detectCustomBeaconLayout('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24')` allows you to detect iBeacons beacons.  
 
-##### Beacons.checkTransmissionSupported(): promise:  
+##### Beacons.detectIBeacons(): void  
+Allows the detection of iBeacons.  
+It's just like calling `detectCustomBeaconLayout` with the iBeacons layout.  
+
+##### Beacons.checkTransmissionSupported(): promise  
 Checks if the device can use the Bluetooth to detect the beacons.  
-This method returns a promise.  
-Example usage (with `.then` and `.catch`):
+Example usage:
 ```javascript
+// Example using then/catch
 Beacons.checkTransmissionSupported()
   .then(result => console.log(`TransmissionSupport status: ${result}`)
   .catch(error => console.log(`TransmissionSupport error: ${error}`)
-```
-Example usage (with `async/await`):
-```javascript
+
+// Example using async/await
 try {
   const transmissionSupport = await Beacons.checkTransmissionSupported()
   console.log(`TransmissionSupport status: ${transmissionSupport}`)
@@ -112,84 +114,76 @@ try {
 }
 ``` 
 
-##### Beacons.startMonitoring(regionId: string, beaconsUUID: string): promise:  
+##### Beacons.startMonitoringForRegion(regionId: string, beaconsUUID: string): promise  
 Starts monitoring for beacons.  
 The parameter `regionId` must be an unique ID.  
 The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).  
-
-This method returns a promise.  
-Example usage (with `.then` and `.catch`):
+Example usage:
 ```javascript
-Beacons.startMonitoring('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+// Example using then/catch
+Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   .then(() => console.log(`Beacons monitoring started succesfully`)
   .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
-```
-Example usage (with `async/await`):
-```javascript
+
+// Example using async/await
 try {
-  await Beacons.startMonitoring('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  console.log(`Beacons ranging started succesfully`)
+  await Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  console.log(`Beacons monitoring started succesfully`)
 } catch (error) {
-  console.log(`Beacons ranging not started, error: ${error}`)
+  console.log(`Beacons monitoring not started, error: ${error}`)
 }
 ``` 
 
-##### Beacons.startRanging(regionId: string, beaconsUUID: string): promise:  
+##### Beacons.startRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise    
 Starts range scan for beacons.  
 The parameter `regionId` must be an unique ID.  
-The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).  
-
-This method returns a promise.  
-Example usage (with `.then` and `.catch`):
+The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).   
+Example usage:
 ```javascript
-Beacons.startRanging('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+// Example using then/catch
+Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   .then(() => console.log(`Beacons ranging started succesfully`)
   .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
-```
-Example usage (with `async/await`):
-```javascript
+
+// Example using async/await
 try {
-  await Beacons.startRanging('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  await Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   console.log(`Beacons ranging started succesfully`)
 } catch (error) {
   console.log(`Beacons ranging not started, error: ${error}`)
 }
 ``` 
 
-##### Beacons.stopMonitoring(): promise:  
+##### Beacons.stopMonitoringForRegion(): promise  
 Stops the monitoring for beacons.  
-
-This method returns a promise.  
-Example usage (with `.then` and `.catch`):
+Example usage:
 ```javascript
-Beacons.stopRanging()
+// Example using then/catch
+Beacons.stopMonitoringForRegion()
   .then(() => console.log(`Beacons monitoring stopped succesfully`)
   .catch(error => console.log(`Beacons monitoring stopped with an error: ${error}`)
-```
-Example usage (with `async/await`):
-```javascript
+
+// Example using async/await
 try {
-  await Beacons.stopRanging()
+  await Beacons.stopMonitoringForRegion()
   console.log(`Beacons monitoring stopped succesfully`)
 } catch (error) {
   console.log(`Beacons monitoring stopped with an error: ${error}`)
 }
 ``` 
 
-##### Beacons.stopRanging(): promise:  
+##### Beacons.stopRangingBeaconsInRegion(): promise  
 Stops the range scan for beacons.  
-
-This method returns a promise.  
-Example usage (with `.then` and `.catch`):
+Example usage:
 ```javascript
-Beacons.stopRanging()
+// Example using then/catch
+Beacons.stopRangingBeaconsInRegion()
   .then(() => console.log(`Beacons ranging stopped succesfully`)
   .catch(error => console.log(`Beacons ranging stopped with an error: ${error}`)
-```
-Example usage (with `async/await`):
-```javascript
+
+// Example using async/await
 try {
-  await Beacons.stopRanging()
+  await Beacons.stopRangingBeaconsInRegion()
   console.log(`Beacons ranging stopped succesfully`)
 } catch (error) {
   console.log(`Beacons ranging stopped with an error: ${error}`)
