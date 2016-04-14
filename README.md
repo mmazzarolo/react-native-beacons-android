@@ -91,14 +91,13 @@ DeviceEventEmitter.addListener('regionDidExit', (region) => {
 ##### Beacons.detectCustomBeaconLayout(parser: string): void  
 Allows the detection of a custom beacon layout.     
 For example `Beacons.detectCustomBeaconLayout('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24')` allows you to detect iBeacons beacons.  
-
+<br />
 ##### Beacons.detectIBeacons(): void  
 Allows the detection of iBeacons.  
 It's just like calling `detectCustomBeaconLayout` with the iBeacons layout.  
-
+<br />
 ##### Beacons.checkTransmissionSupported(): promise  
 Checks if the device can use the Bluetooth to detect the beacons.  
-Example usage:
 ```javascript
 // Example using then/catch
 Beacons.checkTransmissionSupported()
@@ -113,12 +112,11 @@ try {
   console.log(`TransmissionSupport error: ${error}`)
 }
 ``` 
-
+<br />
 ##### Beacons.startMonitoringForRegion(regionId: string, beaconsUUID: string): promise  
 Starts monitoring for beacons.  
 The parameter `regionId` must be an unique ID.  
 The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).  
-Example usage:
 ```javascript
 // Example using then/catch
 Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
@@ -133,12 +131,11 @@ try {
   console.log(`Beacons monitoring not started, error: ${error}`)
 }
 ``` 
-
+<br />
 ##### Beacons.startRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise    
 Starts range scan for beacons.  
 The parameter `regionId` must be an unique ID.  
 The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).   
-Example usage:
 ```javascript
 // Example using then/catch
 Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
@@ -153,10 +150,9 @@ try {
   console.log(`Beacons ranging not started, error: ${error}`)
 }
 ``` 
-
+<br />
 ##### Beacons.stopMonitoringForRegion(): promise  
 Stops the monitoring for beacons.  
-Example usage:
 ```javascript
 // Example using then/catch
 Beacons.stopMonitoringForRegion()
@@ -171,7 +167,7 @@ try {
   console.log(`Beacons monitoring stopped with an error: ${error}`)
 }
 ``` 
-
+<br />
 ##### Beacons.stopRangingBeaconsInRegion(): promise  
 Stops the range scan for beacons.  
 Example usage:
@@ -190,5 +186,6 @@ try {
 }
 ``` 
 
+  
 
 
