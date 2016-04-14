@@ -13,32 +13,32 @@ const tramissionSupport = {
   5: 'NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS'
 }
 
-const addParserForIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
+const detectIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
 
-const addCustomParser = (parser) => beaconsAndroid.addCustomParser(parser)
+const detectCustomBeaconLayout = (parser) => beaconsAndroid.addCustomParser(parser)
 
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
 })
 
-const startMonitoring = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
+const startMonitoringForRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
   beaconsAndroid.startMonitoring(regionId, beaconsUUID, resolve, reject)
 })
 
-const startRanging = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
+const startRangingForRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
   beaconsAndroid.startRanging(regionId, beaconsUUID, resolve, reject)
 })
 
-const stopMonitoring = () => new Promise(beaconsAndroid.stopMonitoring)
+const stopMonitoringForRegion = () => new Promise(beaconsAndroid.stopRanging)
 
-const stopRanging = () => new Promise(beaconsAndroid.stopRanging)
+const stopRangingForRegion = () => new Promise(beaconsAndroid.stopMonitoring)
 
 export default {
-  addParserForIBeacons,
-  addCustomParser,
+  detectIBeacons,
+  detectCustomBeaconLayout,
   checkTransmissionSupported,
-  startMonitoring,
-  startRanging,
-  stopMonitoring,
-  stopRanging
+  startMonitoringForRegion,
+  startRangingForRegion,
+  stopMonitoringForRegion,
+  stopRangingForRegion
 }

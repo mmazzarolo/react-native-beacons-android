@@ -1,6 +1,6 @@
 {
   "name": "react-native-beacons-android",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A React Native (Android) library helper for beacons",
   "main": "index.js",
   "scripts": {
