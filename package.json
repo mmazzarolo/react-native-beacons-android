@@ -1,7 +1,7 @@
 {
   "name": "react-native-beacons-android",
-  "version": "1.0.12",
-  "description": "A React Native (Android) library helper for beacons",
+  "version": "1.0.13",
+  "description": "A React-Native library for detecting beacons on Android",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,7 @@
     "altbeacons",
     "beacon"
   ],
-  "author": "Octavio Turra",
+  "author": "Mazzarolo Matteo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mmazzarolo/react-native-beacons-android/issues"
