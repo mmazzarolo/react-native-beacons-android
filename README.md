@@ -4,15 +4,16 @@ A React-Native library for handling beacons on Android.
 <br/>
 <br/>
 
-
 This library works only on Android, for iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
 Many thanks to Octavio Turra and its awesome [react-native-alt-beacon lib](https://github.com/octavioturra/react-native-alt-beacon) that I used as a starting point for this module (and that still is the foundation of most of the code of this library).
+<br/>
 
 ## Setup  
 1. The library is available on npm, install it with: `npm install --save react-native-beacons-android`.  
 2. Link the library with your project:
 Install [rnpm](https://github.com/rnpm/rnpm) with the command `npm install -g rnpm` and then link the library with the command `rnpm link` 
 3. You're done!  
+<br/>
 
 ## A simple example
 The following example will start detecting all the near iBeacons.  
@@ -33,7 +34,7 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
   console.log('Found beacons!', data)
 })
 ```
-
+<br/>
 ## Usage details
 **1. Import the library**
 ```javascript
@@ -86,6 +87,7 @@ DeviceEventEmitter.addListener('regionDidExit', (region) => {
   console.log('Exited beacons region!', region) // Result of monitoring
 })
 ```
+<br/>
 
 ## API docs
 ##### Beacons.detectCustomBeaconLayout(parser: string): void  
@@ -113,6 +115,7 @@ try {
 }
 ``` 
 <br />
+
 ##### Beacons.startMonitoringForRegion(regionId: string, beaconsUUID: string): promise  
 Starts monitoring for beacons.  
 The parameter `regionId` must be an unique ID.  
@@ -132,6 +135,7 @@ try {
 }
 ``` 
 <br />
+
 ##### Beacons.startRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise    
 Starts range scan for beacons.  
 The parameter `regionId` must be an unique ID.  
@@ -151,6 +155,7 @@ try {
 }
 ``` 
 <br />
+
 ##### Beacons.stopMonitoringForRegion(): promise  
 Stops the monitoring for beacons.  
 ```javascript
@@ -168,6 +173,7 @@ try {
 }
 ``` 
 <br />
+
 ##### Beacons.stopRangingBeaconsInRegion(): promise  
 Stops the range scan for beacons. 
 ```javascript
@@ -184,7 +190,7 @@ try {
   console.log(`Beacons ranging stopped with an error: ${error}`)
 }
 ``` 
-
+<br/>
   
 
 
