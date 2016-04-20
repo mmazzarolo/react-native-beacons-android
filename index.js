@@ -15,7 +15,7 @@ const tramissionSupport = {
 
 const detectIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
 
-const detectCustomBeaconLayout = (parser) => beaconsAndroid.addCustomParser(parser)
+const detectCustomBeaconLayout = (parser) => beaconsAndroid.addParser(parser)
 
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
