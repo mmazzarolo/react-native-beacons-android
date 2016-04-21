@@ -238,10 +238,8 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, beacons: " + beacons.toString());
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, region: " + region.toString());
-                        if (beacons.size() > 0) {
-                            WritableMap map = createBeaconsArray(beacons, region);
-                            sendEvent(reactContext, "beaconsDidRange", map);
-                        }
+                        WritableMap map = createBeaconsArray(beacons, region);
+                        sendEvent(reactContext, "beaconsDidRange", map);
                     }
                 });
 
