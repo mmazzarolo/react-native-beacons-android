@@ -137,6 +137,9 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     public void didExitRegion(Region region) {
                         Log.d(LOG_TAG, "monitoringConsumer didExitRegion, region: " + region.toString());
                         WritableMap map = Arguments.createMap();
+                        map.putString("uuid", region.getUniqueId());
+                        map.putString("major", region.getId2() != null ? region.getId2().toHexString() : "");
+                        map.putString("minor", region.getId3() != null ? region.getId3().toHexString() : "");
                         sendEvent(reactContext, "regionDidExit", map);
                     }
 
