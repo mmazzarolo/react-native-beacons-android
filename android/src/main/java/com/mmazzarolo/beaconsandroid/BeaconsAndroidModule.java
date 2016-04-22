@@ -234,8 +234,8 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
         for (Beacon beacon : beacons) {
             WritableMap b = new WritableNativeMap();
             b.putString("uuid", beacon.getId1().toString());
-            b.putInt("minor", beacon.getId2().toInt());
-            b.putInt("major", beacon.getId3().toInt());
+            b.putInt("major", beacon.getId2().toInt());
+            b.putInt("minor", beacon.getId3().toInt());
             b.putInt("rssi", beacon.getRssi());
             b.putDouble("distance", beacon.getDistance());
             a.pushMap(b);
