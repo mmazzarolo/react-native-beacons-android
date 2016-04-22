@@ -32,6 +32,8 @@ import org.altbeacon.beacon.startup.BootstrapNotifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
      | RANGING METHODS
      ---------------------------------------------------------------------------------------------*/
     protected String rangingRegionId;
+    protected String rangingBeaconUuidString;
     protected Identifier rangingBeaconUuid;
     protected Region rangingRegion;
     protected BeaconsAndroidConsumer rangingConsumer;
@@ -184,6 +187,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
         Log.d(LOG_TAG, "startRanging, rangingRegionId: " + rangingRegionId + ", rangingBeaconUuid: " + rangingBeaconUuid);
         try {
             this.rangingRegionId = rangingRegionId;
+            this.rangingBeaconUuidString = rangingBeaconUuid;
             this.rangingBeaconUuid = (rangingBeaconUuid == null) ? null : Identifier.parse(rangingBeaconUuid);
             this.rangingRegion = new Region(this.rangingRegionId, this.rangingBeaconUuid, null, null);
             if (rangingConsumer == null) {
@@ -198,37 +202,6 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private WritableMap createBeaconsArray(Collection<Beacon> beacons, Region region) {
-        WritableMap map = new WritableNativeMap();
-        map.putString("uuid", region.getUniqueId());
-        WritableArray a = new WritableNativeArray();
-        for (Beacon beacon : beacons) {
-            WritableMap b = new WritableNativeMap();
-            b.putString("id1", beacon.getId1().toHexString());
-            b.putString("id2", beacon.getId2().toHexString());
-            b.putString("id3", beacon.getId3().toHexString());
-            b.putInt("rssi", beacon.getRssi());
-            b.putDouble("distance", beacon.getDistance());
-            List<Long> dataFields = beacon.getDataFields();
-            if (dataFields.size() > 0) {
-                List<Long> dfs = new ArrayList<Long>();
-                for (Long dataField : dataFields) {
-                    dfs.add(dataField);
-                }
-            }
-            List<Long> extraDataFields = beacon.getDataFields();
-            if (extraDataFields.size() > 0) {
-                List<Long> edfs = new ArrayList<Long>();
-                for (Long extraDataField : extraDataFields) {
-                    edfs.add(extraDataField);
-                }
-            }
-            a.pushMap(b);
-        }
-        map.putArray("beacons", a);
-        return map;
-    }
-
     private BeaconsAndroidConsumer createRangingConsumer() {
         return new BeaconsAndroidConsumer(applicationContext) {
             @Override
@@ -238,7 +211,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, beacons: " + beacons.toString());
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, region: " + region.toString());
-                        WritableMap map = createBeaconsArray(beacons, region);
+                        WritableMap map = createRangingResponse(beacons, region);
                         sendEvent(reactContext, "beaconsDidRange", map);
                     }
                 });
@@ -251,6 +224,24 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                 }
             }
         };
+    }
+
+    private WritableMap createRangingResponse(Collection<Beacon> beacons, Region region) {
+        WritableMap map = new WritableNativeMap();
+        map.putString("identifier", region.getUniqueId());
+        map.putString("uuid", rangingBeaconUuidString);
+        WritableArray a = new WritableNativeArray();
+        for (Beacon beacon : beacons) {
+            WritableMap b = new WritableNativeMap();
+            b.putString("uuid", beacon.getId1().toString());
+            b.putString("minor", beacon.getId2().toString());
+            b.putString("major", beacon.getId3().toString());
+            b.putInt("rssi", beacon.getRssi());
+            b.putDouble("distance", beacon.getDistance());
+            a.pushMap(b);
+        }
+        map.putArray("beacons", a);
+        return map;
     }
 
     @ReactMethod
