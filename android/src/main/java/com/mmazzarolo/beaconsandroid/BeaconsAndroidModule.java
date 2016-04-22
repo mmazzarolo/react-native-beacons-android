@@ -128,21 +128,13 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     @Override
                     public void didEnterRegion(Region region) {
                         Log.d(LOG_TAG, "monitoringConsumer didEnterRegion, region: " + region.toString());
-                        WritableMap map = Arguments.createMap();
-                        map.putString("uuid", region.getUniqueId());
-                        map.putString("major", region.getId2() != null ? region.getId2().toHexString() : "");
-                        map.putString("minor", region.getId3() != null ? region.getId3().toHexString() : "");
-                        sendEvent(reactContext, "regionDidEnter", map);
+                        sendEvent(reactContext, "regionDidExit", createMonitoringResponse(region));
                     }
 
                     @Override
                     public void didExitRegion(Region region) {
                         Log.d(LOG_TAG, "monitoringConsumer didExitRegion, region: " + region.toString());
-                        WritableMap map = Arguments.createMap();
-                        map.putString("uuid", region.getUniqueId());
-                        map.putString("major", region.getId2() != null ? region.getId2().toHexString() : "");
-                        map.putString("minor", region.getId3() != null ? region.getId3().toHexString() : "");
-                        sendEvent(reactContext, "regionDidExit", map);
+                        sendEvent(reactContext, "regionDidExit", createMonitoringResponse(region));
                     }
 
                     @Override
@@ -158,6 +150,14 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                 }
             }
         };
+    }
+
+    private WritableMap createMonitoringResponse(Region region) {
+        WritableMap map = new WritableNativeMap();
+        map.putString("uuid", region.getUniqueId());
+        map.putInt("major", region.getId2() != null ? region.getId2().toInt() : 0);
+        map.putInt("minor", region.getId3() != null ? region.getId3().toInt() : 0);
+        return map;
     }
 
     @ReactMethod
@@ -211,8 +211,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, beacons: " + beacons.toString());
                         Log.d(LOG_TAG, "rangingConsumer didRangeBeaconsInRegion, region: " + region.toString());
-                        WritableMap map = createRangingResponse(beacons, region);
-                        sendEvent(reactContext, "beaconsDidRange", map);
+                        sendEvent(reactContext, "beaconsDidRange", createRangingResponse(beacons, region));
                     }
                 });
 
