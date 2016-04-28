@@ -246,13 +246,13 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
 
     private String getProximity(double distance) {
         if (distance == -1.0) {
-            return "Unknown";
+            return "unknown";
         } else if (distance < 1) {
-            return "Immediate";
+            return "immediate";
         } else if (distance < 3) {
-            return "Near";
+            return "near";
         } else {
-            return "Far";
+            return "far";
         }
     }
 
