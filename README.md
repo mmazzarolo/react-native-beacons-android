@@ -31,7 +31,7 @@ Beacons.startRangingBeaconsInRegion('REGION1')
 
 // Print a log of the detected iBeacons (1 per second)
 DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-  console.log('Found beacons!', data)
+  console.log('Found beacons!', data.beacons)
 })
 ```
 <br/>
