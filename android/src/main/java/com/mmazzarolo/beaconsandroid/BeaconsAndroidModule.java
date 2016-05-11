@@ -128,7 +128,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
                     @Override
                     public void didEnterRegion(Region region) {
                         Log.d(LOG_TAG, "monitoringConsumer didEnterRegion, region: " + region.toString());
-                        sendEvent(reactContext, "regionDidExit", createMonitoringResponse(region));
+                        sendEvent(reactContext, "regionDidEnter", createMonitoringResponse(region));
                     }
 
                     @Override
