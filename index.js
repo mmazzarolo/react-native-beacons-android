@@ -14,10 +14,29 @@ const tramissionSupport = {
   5: 'NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS'
 }
 
-const detectIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
-const detectEstimotes = () => beaconsAndroid.addParser(PARSER_ESTIMOTE)
+const detectIBeacons = () => {
+  beaconsAndroid.addParser(PARSER_IBEACON)
+}
 
-const detectCustomBeaconLayout = (parser) => beaconsAndroid.addParser(parser)
+const detectEstimotes = () => {
+  beaconsAndroid.addParser(PARSER_ESTIMOTE)
+}
+
+const detectCustomBeaconLayout = (parser) => {
+  beaconsAndroid.addParser(parser)
+}
+
+const setBackgroundScanPeriod = (period) => {
+  beaconsAndroid.setBackgroundScanPeriod(period)
+}
+
+const setBackgroundBetweenScanPeriod = (period) => {
+  beaconsAndroid.setBackgroundBetweenScanPeriod(period)
+}
+
+const setForegroundScanPeriod = (period) => {
+  beaconsAndroid.setForegroundScanPeriod(period)
+}
 
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
@@ -31,13 +50,20 @@ const startRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((reso
   beaconsAndroid.startRanging(regionId, beaconsUUID, resolve, reject)
 })
 
-const stopMonitoringForRegion = () => new Promise(beaconsAndroid.stopRanging)
+const stopMonitoringForRegion = () => {
+  return new Promise(beaconsAndroid.stopRanging)
+}
 
-const stopRangingBeaconsInRegion = () => new Promise(beaconsAndroid.stopMonitoring)
+const stopRangingBeaconsInRegion = () => {
+  return new Promise(beaconsAndroid.stopMonitoring)
+}
 
 export default {
   detectIBeacons,
   detectCustomBeaconLayout,
+  setBackgroundScanPeriod,
+  setBackgroundBetweenScanPeriod,
+  setForegroundScanPeriod,
   checkTransmissionSupported,
   startMonitoringForRegion,
   startRangingBeaconsInRegion,

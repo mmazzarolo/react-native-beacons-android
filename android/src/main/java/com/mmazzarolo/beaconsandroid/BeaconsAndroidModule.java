@@ -76,6 +76,24 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setBackgroundScanPeriod(int period) {
+        Log.d(LOG_TAG, "setBackgroundScanPeriod - period: " + (long) period);
+        beaconManager.setBackgroundScanPeriod((long) period);
+    }
+
+    @ReactMethod
+    public void setBackgroundBetweenScanPeriod(int period) {
+        Log.d(LOG_TAG, "setBackgroundBetweenScanPeriod - period: " + (long) period);
+        beaconManager.setBackgroundBetweenScanPeriod((long) period);
+    }
+
+    @ReactMethod
+    public void setForegroundScanPeriod(int period) {
+        Log.d(LOG_TAG, "setForegroundScanPeriod - period: " + (long) period);
+        beaconManager.setForegroundScanPeriod((long) period);
+    }
+
+    @ReactMethod
     public void checkTransmissionSupported(Callback callback) {
         int result = BeaconTransmitter.checkTransmissionSupported(reactContext);
         Log.d(LOG_TAG, "checkTransmissionSupport - result: " + result);
