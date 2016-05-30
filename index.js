@@ -2,7 +2,8 @@ import { NativeModules } from 'react-native'
 
 const beaconsAndroid = NativeModules.BeaconsAndroidModule
 
-const PARSER_IBEACON= 'm:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24'
+const PARSER_IBEACON = 'm:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24'
+const PARSER_ESTIMOTE = 'm:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24'
 
 const tramissionSupport = {
   0: 'SUPPORTED',
@@ -14,6 +15,7 @@ const tramissionSupport = {
 }
 
 const detectIBeacons = () => beaconsAndroid.addParser(PARSER_IBEACON)
+const detectEstimotes = () => beaconsAndroid.addParser(PARSER_ESTIMOTE)
 
 const detectCustomBeaconLayout = (parser) => beaconsAndroid.addParser(parser)
 
