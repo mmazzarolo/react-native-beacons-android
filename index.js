@@ -51,11 +51,11 @@ const startRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((reso
 })
 
 const stopMonitoringForRegion = () => {
-  return new Promise(beaconsAndroid.stopRanging)
+  return new Promise(beaconsAndroid.stopMonitoring)
 }
 
 const stopRangingBeaconsInRegion = () => {
-  return new Promise(beaconsAndroid.stopMonitoring)
+  return new Promise(beaconsAndroid.stopRanging)
 }
 
 export default {
