@@ -60,6 +60,7 @@ const stopRangingBeaconsInRegion = () => {
 
 export default {
   detectIBeacons,
+  detectEstimotes,
   detectCustomBeaconLayout,
   setBackgroundScanPeriod,
   setBackgroundBetweenScanPeriod,
