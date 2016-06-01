@@ -182,6 +182,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
     public void stopMonitoring(Callback resolve, Callback reject) {
         try {
             beaconManager.stopMonitoringBeaconsInRegion(monitoringRegion);
+            beaconManager.unbind(monitoringConsumer);
             monitoringConsumer = null;
             Log.d(LOG_TAG, "stopMonitoring, success");
             resolve.invoke();
@@ -278,6 +279,7 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule {
     public void stopRanging(Callback resolve, Callback reject) {
         try {
             beaconManager.stopRangingBeaconsInRegion(rangingRegion);
+            beaconManager.unbind(rangingConsumer);
             rangingConsumer = null;
             Log.d(LOG_TAG, "stopRanging, success");
             resolve.invoke();
