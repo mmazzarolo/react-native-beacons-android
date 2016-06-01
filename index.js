@@ -1,6 +1,6 @@
-import { NativeModules } from 'react-native'
+const ReactNative = require('react-native')
 
-const beaconsAndroid = NativeModules.BeaconsAndroidModule
+const beaconsAndroid = ReactNative.NativeModules.BeaconsAndroidModule
 
 const PARSER_IBEACON = 'm:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24'
 const PARSER_ESTIMOTE = 'm:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24'
@@ -58,7 +58,7 @@ const stopRangingBeaconsInRegion = () => {
   return new Promise(beaconsAndroid.stopRanging)
 }
 
-export default {
+module.exports = {
   detectIBeacons,
   detectEstimotes,
   detectCustomBeaconLayout,
