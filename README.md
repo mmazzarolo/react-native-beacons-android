@@ -4,8 +4,8 @@ A React-Native library for handling beacons on Android.
 <br/>
 <br/>
 
-This library works only on Android, on iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
-Many thanks to Octavio Turra and its awesome [react-native-alt-beacon lib](https://github.com/octavioturra/react-native-alt-beacon) that I used as a starting point for this module (and that still is the foundation of most of the code of this library).
+This library works only on Android.  
+On iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
 <br/>
 
 ## Setup  
@@ -16,7 +16,7 @@ Install [rnpm](https://github.com/rnpm/rnpm) with the command `npm install -g rn
 <br/>
 
 ## A simple example
-The following example will start detecting all the near iBeacons.  
+The following example will start detecting all the close iBeacons.  
 ```javascript
 import { DeviceEventEmitter } from 'react-native'
 import Beacons from 'react-native-beacons-android'
