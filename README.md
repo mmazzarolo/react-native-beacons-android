@@ -34,6 +34,12 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
   console.log('Found beacons!', data.beacons)
 })
 ```
+
+<br/>
+
+## Example project
+You can find an example project using `react-native-ibeacon` + `react-native-beacons-android` [here] (https://github.com/MacKentoch/reactNativeBeaconExample) (thanks to [MacKentoch](https://github.com/MacKentoch)).    
+
 <br/>
 ## Usage details
 **1. Import the library**
