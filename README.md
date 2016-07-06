@@ -26,8 +26,8 @@ Beacons.detectIBeacons()
 
 // Start detecting all iBeacons in the nearby
 Beacons.startRangingBeaconsInRegion('REGION1')
-  .then(() => console.log(`Beacons monitoring started succesfully!`)
-  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+  .then(() => console.log(`Beacons ranging started succesfully!`)
+  .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
 
 // Print a log of the detected iBeacons (1 per second)
 DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
