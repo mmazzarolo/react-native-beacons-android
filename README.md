@@ -5,7 +5,7 @@ A React-Native library for handling beacons on Android.
 <br/>
 
 This library works only on Android.  
-On iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
+On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
 
 <br/>
 
