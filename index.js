@@ -38,6 +38,14 @@ const setForegroundScanPeriod = (period) => {
   beaconsAndroid.setForegroundScanPeriod(period)
 }
 
+const getRangedRegions = () => new Promise((resolve, reject) => {
+  beaconsAndroid.getRangedRegions(resolve)
+})
+
+const getMonitoredRegions = () => new Promise((resolve, reject) => {
+  beaconsAndroid.getMonitoredRegions(resolve)
+})
+
 const checkTransmissionSupported = () => new Promise((resolve, reject) => {
   beaconsAndroid.checkTransmissionSupported(status => resolve(tramissionSupport[status]))
 })
@@ -50,13 +58,13 @@ const startRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((reso
   beaconsAndroid.startRanging(regionId, beaconsUUID, resolve, reject)
 })
 
-const stopMonitoringForRegion = () => {
-  return new Promise(beaconsAndroid.stopMonitoring)
-}
+const stopMonitoringForRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
+  beaconsAndroid.stopMonitoring(regionId, beaconsUUID, resolve, reject)
+})
 
-const stopRangingBeaconsInRegion = () => {
-  return new Promise(beaconsAndroid.stopRanging)
-}
+const stopRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((resolve, reject) => {
+  beaconsAndroid.stopRanging(regionId, beaconsUUID, resolve, reject)
+})
 
 module.exports = {
   detectIBeacons,
@@ -66,6 +74,8 @@ module.exports = {
   setBackgroundBetweenScanPeriod,
   setForegroundScanPeriod,
   checkTransmissionSupported,
+  getRangedRegions,
+  getMonitoredRegions,
   startMonitoringForRegion,
   startRangingBeaconsInRegion,
   stopMonitoringForRegion,
