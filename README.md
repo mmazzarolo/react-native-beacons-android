@@ -6,6 +6,7 @@ A React-Native library for handling beacons on Android.
 
 This library works only on Android.  
 On iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like react-native-ibeacon for semplifying Android/iOS code sharing).  
+
 <br/>
 
 ## Setup  
@@ -14,6 +15,7 @@ On iOS you should use  [react-native-ios](https://www.npmjs.com/package/react-na
 If you're using React-Native < 0.29 install [rnpm](https://github.com/rnpm/rnpm) with the command `npm install -g rnpm` and then link the library with the command `rnpm link`.  
 If you're using React-Native >= 0.29 just link the library with the command `react-native link`.
 3. You're done!  
+
 <br/>
 
 ## A simple example
@@ -42,6 +44,13 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
 You can find an example project using `react-native-ibeacon` + `react-native-beacons-android` [here] (https://github.com/MacKentoch/reactNativeBeaconExample) (thanks to [MacKentoch](https://github.com/MacKentoch)).    
 
 <br/>
+
+## Usage on Android 6 (Marshmallow)
+Detecting beacons on Android 6 requires runtime permission, which currently aren't supported natively by React-Native.  
+While waiting for an official solution you can use [react-native-permissions](https://github.com/yonahforst/react-native-permissions) (more information regarding this topic [here](https://github.com/mmazzarolo/react-native-beacons-android/issues/15)). Thanks to [@alessandro-bottamedi](https://github.com/alessandro-bottamedi) for investigating on it.
+
+<br/>
+
 ## Usage details
 **1. Import the library**
 ```javascript
