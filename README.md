@@ -29,8 +29,8 @@ Beacons.detectIBeacons()
 
 // Start detecting all iBeacons in the nearby
 Beacons.startRangingBeaconsInRegion('REGION1')
-  .then(() => console.log(`Beacons ranging started succesfully!`)
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
+  .then(() => console.log(`Beacons ranging started succesfully!`))
+  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
 
 // Print a log of the detected iBeacons (1 per second)
 DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
@@ -74,13 +74,13 @@ If you don't know the difference between monitoring and ranging you can find som
 ```javascript
 // Ranging
 Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons ranging started succesfully`)
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
+  .then(() => console.log(`Beacons ranging started succesfully`))
+  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
 
 // Monitoring
 Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons monitoring started succesfully`)
-  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+  .then(() => console.log(`Beacons monitoring started succesfully`))
+  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
 ```
 The parameter `REGION1` that I'm using is an identifier for the scanned region (use whatever you like).  
 The parameter `2ba8e073-b782-3957-0947-268e3850lopd` is optional, and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).  
@@ -119,8 +119,8 @@ Checks if the device can use the Bluetooth to detect the beacons.
 ```javascript
 // Example using then/catch
 Beacons.checkTransmissionSupported()
-  .then(result => console.log(`TransmissionSupport status: ${result}`)
-  .catch(error => console.log(`TransmissionSupport error: ${error}`)
+  .then(result => console.log(`TransmissionSupport status: ${result}`))
+  .catch(error => console.log(`TransmissionSupport error: ${error}`))
 
 // Example using async/await
 try {
@@ -139,8 +139,8 @@ The parameter `beaconsUUID` is optional, it allows you to detect only the beacon
 ```javascript
 // Example using then/catch
 Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons monitoring started succesfully`)
-  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`)
+  .then(() => console.log(`Beacons monitoring started succesfully`))
+  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
 
 // Example using async/await
 try {
@@ -159,8 +159,8 @@ The parameter `beaconsUUID` is optional, it allows you to detect only the beacon
 ```javascript
 // Example using then/catch
 Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons ranging started succesfully`)
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`)
+  .then(() => console.log(`Beacons ranging started succesfully`))
+  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
 
 // Example using async/await
 try {
@@ -177,8 +177,8 @@ Stops the monitoring for beacons.
 ```javascript
 // Example using then/catch
 Beacons.stopMonitoringForRegion()
-  .then(() => console.log(`Beacons monitoring stopped succesfully`)
-  .catch(error => console.log(`Beacons monitoring stopped with an error: ${error}`)
+  .then(() => console.log(`Beacons monitoring stopped succesfully`))
+  .catch(error => console.log(`Beacons monitoring stopped with an error: ${error}`))
 
 // Example using async/await
 try {
@@ -195,8 +195,8 @@ Stops the range scan for beacons.
 ```javascript
 // Example using then/catch
 Beacons.stopRangingBeaconsInRegion()
-  .then(() => console.log(`Beacons ranging stopped succesfully`)
-  .catch(error => console.log(`Beacons ranging stopped with an error: ${error}`)
+  .then(() => console.log(`Beacons ranging stopped succesfully`))
+  .catch(error => console.log(`Beacons ranging stopped with an error: ${error}`))
 
 // Example using async/await
 try {
