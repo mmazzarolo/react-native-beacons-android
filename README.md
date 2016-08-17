@@ -18,6 +18,12 @@ If you're using React-Native >= 0.29 just link the library with the command `rea
 
 <br/>
 
+## Beta release 
+If you're interested you can find even more features (not documented in the README yet) in the new [2.0.0-beta release](
+https://github.com/mmazzarolo/react-native-beacons-android/issues/20)
+
+<br/>
+
 ## A simple example
 The following example will start detecting all the close iBeacons.  
 ```javascript
