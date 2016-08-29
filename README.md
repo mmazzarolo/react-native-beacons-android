@@ -123,12 +123,6 @@ It's just like calling `detectCustomBeaconLayout` with the iBeacons layout.
 ##### Beacons.checkTransmissionSupported(): promise  
 Checks if the device can use the Bluetooth to detect the beacons.  
 ```javascript
-// Example using then/catch
-Beacons.checkTransmissionSupported()
-  .then(result => console.log(`TransmissionSupport status: ${result}`))
-  .catch(error => console.log(`TransmissionSupport error: ${error}`))
-
-// Example using async/await
 try {
   const transmissionSupport = await Beacons.checkTransmissionSupported()
   console.log(`TransmissionSupport status: ${transmissionSupport}`)
@@ -143,12 +137,6 @@ Starts monitoring for beacons.
 The parameter `regionId` must be an unique ID.  
 The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).  
 ```javascript
-// Example using then/catch
-Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons monitoring started succesfully`))
-  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
-
-// Example using async/await
 try {
   await Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   console.log(`Beacons monitoring started succesfully`)
@@ -163,12 +151,6 @@ Starts range scan for beacons.
 The parameter `regionId` must be an unique ID.  
 The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).   
 ```javascript
-// Example using then/catch
-Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons ranging started succesfully`))
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
-
-// Example using async/await
 try {
   await Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
   console.log(`Beacons ranging started succesfully`)
@@ -181,12 +163,6 @@ try {
 ##### Beacons.stopMonitoringForRegion(): promise  
 Stops the monitoring for beacons.  
 ```javascript
-// Example using then/catch
-Beacons.stopMonitoringForRegion()
-  .then(() => console.log(`Beacons monitoring stopped succesfully`))
-  .catch(error => console.log(`Beacons monitoring stopped with an error: ${error}`))
-
-// Example using async/await
 try {
   await Beacons.stopMonitoringForRegion()
   console.log(`Beacons monitoring stopped succesfully`)
@@ -199,12 +175,6 @@ try {
 ##### Beacons.stopRangingBeaconsInRegion(): promise  
 Stops the range scan for beacons. 
 ```javascript
-// Example using then/catch
-Beacons.stopRangingBeaconsInRegion()
-  .then(() => console.log(`Beacons ranging stopped succesfully`))
-  .catch(error => console.log(`Beacons ranging stopped with an error: ${error}`))
-
-// Example using async/await
 try {
   await Beacons.stopRangingBeaconsInRegion()
   console.log(`Beacons ranging stopped succesfully`)
