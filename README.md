@@ -34,9 +34,12 @@ import Beacons from 'react-native-beacons-android'
 Beacons.detectIBeacons()
 
 // Start detecting all iBeacons in the nearby
-Beacons.startRangingBeaconsInRegion('REGION1')
-  .then(() => console.log(`Beacons ranging started succesfully!`))
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
+try {
+  await Beacons.startRangingBeaconsInRegion('REGION1')
+  console.log(`Beacons ranging started succesfully!`)
+} catch (err) {
+  console.log(`Beacons ranging not started, error: ${error}`)
+}
 
 // Print a log of the detected iBeacons (1 per second)
 DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
@@ -79,14 +82,20 @@ You can use this library for both region monitoring and region ranging.
 If you don't know the difference between monitoring and ranging you can find some informations [here](https://community.estimote.com/hc/en-us/articles/203356607-What-are-region-Monitoring-and-Ranging-).  
 ```javascript
 // Ranging
-Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons ranging started succesfully`))
-  .catch(error => console.log(`Beacons ranging not started, error: ${error}`))
+try {
+  await Beacons.startRangingBeaconsInRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  console.log(`Beacons ranging started succesfully`)
+} catch (err) {
+  console.log(`Beacons ranging not started, error: ${error}`)
+}
 
 // Monitoring
-Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
-  .then(() => console.log(`Beacons monitoring started succesfully`))
-  .catch(error => console.log(`Beacons monitoring not started, error: ${error}`))
+try {
+  await Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  console.log(`Beacons monitoring started succesfully`)
+} catch (err) {
+  console.log(`Beacons monitoring not started, error: ${error}`)
+}
 ```
 The parameter `REGION1` that I'm using is an identifier for the scanned region (use whatever you like).  
 The parameter `2ba8e073-b782-3957-0947-268e3850lopd` is optional, and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).  
