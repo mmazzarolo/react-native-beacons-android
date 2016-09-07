@@ -24,6 +24,12 @@ https://github.com/mmazzarolo/react-native-beacons-android/issues/20)
 
 <br/>
 
+## Eddystone support  
+Do you have a spare Eddystone beacon and a bit of knowledge of Java?  
+Well, you're the perfect candidate for helping with the issue [#22](https://github.com/mmazzarolo/react-native-beacons-android/issues/22)!
+
+<br/>
+
 ## A simple example
 The following example will start detecting all the close iBeacons.  
 ```javascript
