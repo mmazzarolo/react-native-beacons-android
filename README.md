@@ -250,21 +250,3 @@ try {
 }
 ```
 <br/>
-
-##### Beacons.setForegroundScanPeriod(period: number): void
-Sets the duration in milliseconds of each Bluetooth LE scan cycle to look for beacons (in foreground).
-For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br/>
-<br/>
-
-##### Beacons.setBackgroundScanPeriod(period: number): void
-Sets the duration in milliseconds of each Bluetooth LE scan cycle to look for beacons (in background).
-For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br/>
-<br/>
-
-##### Beacons.setBackgroundBetweenScanPeriod(period: number): void
-Sets the duration in milliseconds spent not scanning between each Bluetooth LE scan cycle when no ranging/monitoring clients are in the foreground.
-For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br/>
-<br/>
