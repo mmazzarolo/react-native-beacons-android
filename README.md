@@ -55,8 +55,8 @@ You can find an example project using `react-native-ibeacon` + `react-native-bea
 <br/>
 
 ## Usage on Android 6 (Marshmallow)
-Detecting beacons on Android 6 requires runtime permission, which currently aren't supported natively by React-Native.
-While waiting for an official solution you can use [react-native-permissions](https://github.com/yonahforst/react-native-permissions) (more information regarding this topic [here](https://github.com/mmazzarolo/react-native-beacons-android/issues/15)). Thanks to [@alessandro-bottamedi](https://github.com/alessandro-bottamedi) for investigating on it.
+Detecting beacons on Android 6 requires [runtime permission](https://github.com/mmazzarolo/react-native-beacons-android/issues/15).  
+Thanks to [@alessandro-bottamedi](https://github.com/alessandro-bottamedi) and [@micheletedeschi](https://github.com/micheletedeschi) for investigating on it.
 
 <br/>
 
