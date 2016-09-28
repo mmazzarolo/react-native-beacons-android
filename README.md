@@ -170,7 +170,10 @@ For more info [take a look at the official docs](https://altbeacon.github.io/and
 <br />
 
 ##### Beacons.setHardwareEqualityEnforced(e: boolean): void
-Configures whether a the bluetoothAddress (mac address) must be the same for two Beacons to be configured equal. This setting applies to all beacon instances in the same process. Defaults to false for backward compatibility. Useful when all the beacons you are working with have the same UUID, major and minor (they are only uniquely identifiable by their MAC_ADDRESS), otherwise the module will detect all the beacons as if they were only one.
+Configures whether the bluetoothAddress (mac address) must be the same for two Beacons to be configured equal. This setting applies to all beacon instances in the same process. Defaults to false for backward compatibility.
+<br />
+Useful when all the beacons you are working with have the same UUID, major and minor (they are only uniquely identifiable by their mac address), otherwise the module will detect all the beacons as if they were only one.
+<br />
 For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
 <br />
 <br />
