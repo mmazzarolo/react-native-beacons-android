@@ -14,6 +14,10 @@ const tramissionSupport = {
   5: 'NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS'
 }
 
+const setHardwareEqualityEnforced = (e) => {
+  beaconsAndroid.setHardwareEqualityEnforced(e)
+}
+
 const detectIBeacons = () => {
   beaconsAndroid.addParser(PARSER_IBEACON)
 }
@@ -67,6 +71,7 @@ const stopRangingBeaconsInRegion = (regionId, beaconsUUID) => new Promise((resol
 })
 
 module.exports = {
+  setHardwareEqualityEnforced,
   detectIBeacons,
   detectEstimotes,
   detectCustomBeaconLayout,

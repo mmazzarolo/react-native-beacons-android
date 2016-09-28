@@ -64,6 +64,11 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
+    public void setHardwareEqualityEnforced(Boolean e) {
+      Beacon.setHardwareEqualityEnforced(e.booleanValue());
+    }
+
+    @ReactMethod
     public void addParser(String parser) {
         mBeaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(parser));
     }
