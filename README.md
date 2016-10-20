@@ -91,14 +91,22 @@ try {
 
 // Monitoring
 try {
-  await Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  const myRegion = {
+    identifier: 'REGION1', 
+    uuid: '2ba8e073-b782-3957-0947-268e3850lopd',
+    minor: 123,
+    major: 456
+  };
+  await Beacons.startMonitoringForRegion(myRegion)
   console.log(`Beacons monitoring started successfully`)
 } catch (err) {
   console.log(`Beacons monitoring not started, error: ${error}`)
 }
 ```
-The parameter `REGION1` that I'm using is an identifier for the scanned region (use whatever you like).
-The parameter `2ba8e073-b782-3957-0947-268e3850lopd` is optional, and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).
+The region is an object with 4 attributes.
+The `identifier` is for the scanned region (use whatever you like).
+The `uuid` is an identifier for your beacons and is used for limiting the detected beacons to the beacons with that specific UUID (if the parameter is omitted the library will detect any beacons).
+The attributes `minor` and `major` are used to identify a specific region of one beacon.
 
 P.S.: You can stop ranging/monitoring by calling `Beacons.stopRangingBeaconsInRegion()` and `Beacons.stopMonitoringForRegion()`
 
@@ -202,13 +210,20 @@ try {
 ```
 <br />
 
-##### Beacons.startMonitoringForRegion(regionId: string, beaconsUUID: string): promise
+##### Beacons.startMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise
 Starts monitoring for beacons.
-The parameter `regionId` must be an unique ID.
-The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).
+The parameter `identifier` must be an unique ID.
+The parameter `uuid` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).
+The parameters `minor` and `major` are optional, they allow you to monitor only the region of a specific beacon.
 ```javascript
 try {
-  await Beacons.startMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  const myRegion = {
+    identifier: 'REGION1', 
+    uuid: '2ba8e073-b782-3957-0947-268e3850lopd',
+    minor: 123,
+    major: 456
+  };
+  await Beacons.startMonitoringForRegion(myRegion)
   console.log(`Beacons monitoring started successfully`)
 } catch (error) {
   console.log(`Beacons monitoring not started, error: ${error}`)
@@ -229,12 +244,17 @@ try {
 }
 ```
 <br />
-
-##### Beacons.stopMonitoringForRegion(regionId: string, beaconsUUID: string): promise
+##### Beacons.stopMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise
 Stops the monitoring for beacons.
 ```javascript
 try {
-  await Beacons.stopMonitoringForRegion('REGION1', '2ba8e073-b782-3957-0947-268e3850lopd')
+  const myRegion = {
+    identifier: 'REGION1', 
+    uuid: '2ba8e073-b782-3957-0947-268e3850lopd',
+    minor: 123,
+    major: 456
+  };
+  await Beacons.stopMonitoringForRegion(myRegion)
   console.log(`Beacons monitoring stopped successfully`)
 } catch (error) {
   console.log(`Beacons monitoring stopped with an error: ${error}`)
