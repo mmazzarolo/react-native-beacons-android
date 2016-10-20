@@ -159,10 +159,10 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule implements 
      * Monitoring
      **********************************************************************************************/
     @ReactMethod
-    public void startMonitoring(String regionId, String beaconUuid, Callback resolve, Callback reject) {
-        Log.d(LOG_TAG, "startMonitoring, monitoringRegionId: " + regionId + ", monitoringBeaconUuid: " + beaconUuid);
+    public void startMonitoring(String regionId, String beaconUuid, int minor, int major, Callback resolve, Callback reject) {
+        Log.d(LOG_TAG, "startMonitoring, monitoringRegionId: " + regionId + ", monitoringBeaconUuid: " + beaconUuid + ", minor: " + minor + ", major: " + major);
         try {
-            Region region = createRegion(regionId, beaconUuid);
+            Region region = createRegion(regionId, beaconUuid, minor, major);
             mBeaconManager.startMonitoringBeaconsInRegion(region);
             resolve.invoke();
         } catch (Exception e) {
@@ -190,14 +190,16 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule implements 
 
     private WritableMap createMonitoringResponse(Region region) {
         WritableMap map = new WritableNativeMap();
-        map.putString("uuid", region.getUniqueId());
-        map.putString("uuid", region.getUniqueId());
+        map.putString("id", region.getUniqueId());
+        map.putString("uuid", region.getId1().toString());
+        map.putInt("major", region.getId2() != null ? region.getId2().toInt() : 0);
+        map.putInt("minor", region.getId3() != null ? region.getId3().toInt() : 0);
         return map;
     }
 
     @ReactMethod
-    public void stopMonitoring(String regionId, String beaconUuid, Callback resolve, Callback reject) {
-        Region region = createRegion(regionId, beaconUuid);
+    public void stopMonitoring(String regionId, String beaconUuid, int minor, int major, Callback resolve, Callback reject) {
+        Region region = createRegion(regionId, beaconUuid, minor, major);
         try {
             mBeaconManager.stopMonitoringBeaconsInRegion(region);
             resolve.invoke();
@@ -288,5 +290,10 @@ public class BeaconsAndroidModule extends ReactContextBaseJavaModule implements 
     private Region createRegion(String regionId, String beaconUuid) {
         Identifier id1 = (beaconUuid == null) ? null : Identifier.parse(beaconUuid);
         return new Region(regionId, id1, null, null);
+    }
+
+    private Region createRegion(String regionId, String beaconUuid, int minor, int major) {
+        Identifier id1 = (beaconUuid == null) ? null : Identifier.parse(beaconUuid);
+        return new Region(regionId, id1, Identifier.fromInt(major), Identifier.fromInt(minor));
     }
 }
