@@ -9,6 +9,11 @@ On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/reac
 
 <br/>
 
+## HELP WANTED
+I'm having some trouble keeping up with the support for this library at the moment.  
+If you know Java a bit and you're willing to help just write me a message or open an issue. Thank you :)
+
+<br/>
 ## Setup
 1. The library is available on npm, install it with: `npm install --save react-native-beacons-android`.
 2. Link the library with your project:
