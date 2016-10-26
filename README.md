@@ -9,7 +9,7 @@ On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/reac
 
 <br/>
 
-## WILLING TO HELP?
+## Willing to help?
 I'm having some trouble keeping up with the support for this library at the moment.  
 If you know Java a bit and you're willing to help just write me a message or open an issue. Thank you :)
 
