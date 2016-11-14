@@ -9,9 +9,10 @@ On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/reac
 
 <br/>
 
-## Willing to help?
-I'm having some trouble keeping up with the support for this library at the moment.  
+## NEW MAINTAINER WANTED
+I'm having some trouble keeping up with the support for this library at the moment (I don't have any beacon available).  
 If you know Java a bit and you're willing to help just write me a message or open an issue. Thank you :)
+[Discussion](https://github.com/mmazzarolo/react-native-beacons-android/issues/31).
 
 <br/>
 ## Setup
