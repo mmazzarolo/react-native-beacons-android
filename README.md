@@ -13,12 +13,6 @@ This module is almost deprecated now.
 If you're interested in handling beacons in Android I suggest you to take a look at [react-native-beacons-manager](https://github.com/MacKentoch/react-native-beacons-manager), which implement this library and also provide platform parity with iOS out of the box!  
 
 <br/>
-## NEW MAINTAINER WANTED
-I'm having some trouble keeping up with the support for this library at the moment (I don't have any beacon available).  
-If you know Java a bit and you're willing to help just write me a message or open an issue. Thank you :)
-[Discussion](https://github.com/mmazzarolo/react-native-beacons-android/issues/31).
-
-<br/>
 ## Setup
 1. The library is available on npm, install it with: `npm install --save react-native-beacons-android`.
 2. Link the library with your project:
