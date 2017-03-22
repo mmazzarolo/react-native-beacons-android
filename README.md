@@ -1,18 +1,15 @@
-<img src="http://insideoutdoor.com/wp-content/uploads/2016/02/beacon-example31.png" width="130" align="left">
+<img src="http://insideoutdoor.com/wp-content/uploads/2016/02/beacon-example31.png" width="130" align="left" />
+
 # react-native-beacons-android
-A React-Native library for handling beacons on Android.
-<br/>
-<br/>
+A React-Native library for handling beacons on Android.  
 
 This library works only on Android.
 On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like it).
 
-<br/>
 ## DEPRECATED
 This module is almost deprecated now.  
 If you're interested in handling beacons in Android I suggest you to take a look at [react-native-beacons-manager](https://github.com/MacKentoch/react-native-beacons-manager), which implement this library and also provide platform parity with iOS out of the box!  
 
-<br/>
 ## Setup
 1. The library is available on npm, install it with: `npm install --save react-native-beacons-android`.
 2. Link the library with your project:
@@ -20,13 +17,9 @@ If you're using React-Native < 0.29 install [rnpm](https://github.com/rnpm/rnpm)
 If you're using React-Native >= 0.29 just link the library with the command `react-native link`.
 3. You're done!
 
-<br/>
-
 ## Eddystone support
 Do you have a spare Eddystone beacon and a bit of knowledge of Java?
 Well, you're the perfect candidate for helping with the issue [#22](https://github.com/mmazzarolo/react-native-beacons-android/issues/22)!
-
-<br/>
 
 ## A simple example
 The following example will start detecting all the close iBeacons.
@@ -51,18 +44,12 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
 })
 ```
 
-<br/>
-
 ## Example project
 You can find an example project using `react-native-ibeacon` + `react-native-beacons-android` [here] (https://github.com/MacKentoch/reactNativeBeaconExample) (thanks to [MacKentoch](https://github.com/MacKentoch)).
-
-<br/>
 
 ## Usage on Android 6 (Marshmallow)
 Detecting beacons on Android 6 requires [runtime permission](https://github.com/mmazzarolo/react-native-beacons-android/issues/15).  
 Thanks to [@alessandro-bottamedi](https://github.com/alessandro-bottamedi) and [@micheletedeschi](https://github.com/micheletedeschi) for investigating on it.
-
-<br/>
 
 ## Usage details
 **1. Import the library**
@@ -130,26 +117,19 @@ DeviceEventEmitter.addListener('regionDidExit', (region) => {
   console.log('Exited beacons region!', region) // Result of monitoring
 })
 ```
-<br/>
 
 ## API docs
 ##### Beacons.detectCustomBeaconLayout(parser: string): void
 Allows the detection of a custom beacon layout.
 For example `Beacons.detectCustomBeaconLayout('m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24')` allows you to detect iBeacons beacons.
-<br />
-<br />
 
 ##### Beacons.detectIBeacons(): void
 Allows the detection of iBeacons.
 It's just like calling `detectCustomBeaconLayout` with the iBeacons layout.
-<br />
-<br />
 
 ##### Beacons.detectEstimotes(): void
 Allows the detection of Estimote beacons.
 It's just like calling `detectCustomBeaconLayout` with the Estimote layout.
-<br />
-<br />
 
 ##### Beacons.checkTransmissionSupported(): promise
 Checks if the device can use the Bluetooth to detect the beacons.
@@ -161,34 +141,23 @@ try {
   console.log(`TransmissionSupport error: ${error}`)
 }
 ```
-<br />
 
 ##### Beacons.setForegroundScanPeriod(period: number): void
 Sets the duration in milliseconds of each Bluetooth LE scan cycle to look for beacons (in foreground).
 For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br />
-<br />
 
 ##### Beacons.setBackgroundScanPeriod(period: number): void
 Sets the duration in milliseconds of each Bluetooth LE scan cycle to look for beacons (in background).
 For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br />
-<br />
 
 ##### Beacons.setBackgroundBetweenScanPeriod(period: number): void
 Sets the duration in milliseconds spent not scanning between each Bluetooth LE scan cycle when no ranging/monitoring clients are in the foreground.
 For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br />
-<br />
 
 ##### Beacons.setHardwareEqualityEnforced(e: boolean): void
-Configures whether the bluetoothAddress (mac address) must be the same for two Beacons to be configured equal. This setting applies to all beacon instances in the same process. Defaults to false for backward compatibility.
-<br />
-Useful when all the beacons you are working with have the same UUID, major and minor (they are only uniquely identifiable by their mac address), otherwise the module will detect all the beacons as if they were only one.
-<br />
+Configures whether the bluetoothAddress (mac address) must be the same for two Beacons to be configured equal. This setting applies to all beacon instances in the same process. Defaults to false for backward compatibility.  
+Useful when all the beacons you are working with have the same UUID, major and minor (they are only uniquely identifiable by their mac address), otherwise the module will detect all the beacons as if they were only one.  
 For more info [take a look at the official docs](https://altbeacon.github.io/android-beacon-library/javadoc/index.html)
-<br />
-<br />
 
 ##### Beacons.getRangedRegions(): promise
 Returns a promise that resolves in an array with the regions being ranged.  
@@ -200,7 +169,6 @@ try {
   console.log(`getRangedRegions error: ${error}`)
 }
 ```
-<br />
 
 ##### Beacons.getMonitoredRegions(): promise
 Returns a promise that resolves in an array with the regions being monitored.  
@@ -212,7 +180,6 @@ try {
   console.log(`getMonitoredRegions error: ${error}`)
 }
 ```
-<br />
 
 ##### Beacons.startMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise
 Starts monitoring for beacons.
@@ -233,7 +200,6 @@ try {
   console.log(`Beacons monitoring not started, error: ${error}`)
 }
 ```
-<br />
 
 ##### Beacons.startRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise
 Starts range scan for beacons.
@@ -247,7 +213,7 @@ try {
   console.log(`Beacons ranging not started, error: ${error}`)
 }
 ```
-<br />
+
 ##### Beacons.stopMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise
 Stops the monitoring for beacons.
 ```javascript
@@ -264,7 +230,6 @@ try {
   console.log(`Beacons monitoring stopped with an error: ${error}`)
 }
 ```
-<br />
 
 ##### Beacons.stopRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise
 Stops the range scan for beacons.
@@ -276,4 +241,3 @@ try {
   console.log(`Beacons ranging stopped with an error: ${error}`)
 }
 ```
-<br/>
