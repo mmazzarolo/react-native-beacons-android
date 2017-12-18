@@ -7,7 +7,7 @@ This library works only on Android.
 On iOS you should use  [react-native-ibeacon](https://www.npmjs.com/package/react-native-ibeacon) (I tried to name the events/method like it).
 
 ## DEPRECATED
-This module is almost deprecated now.  
+This module is deprecated.  
 If you're interested in handling beacons in Android I suggest you to take a look at [react-native-beacons-manager](https://github.com/MacKentoch/react-native-beacons-manager), which implement this library and also provide platform parity with iOS out of the box!  
 
 ## Setup
